@@ -59,3 +59,31 @@ foreach (var persona in solteros) {
 }
 
 /* First y FirstOrDefault */
+var primeraPersona = personas.First();
+var primeraPersona2 = personas.FirstOrDefault();
+
+Console.WriteLine($"Nombre: { primeraPersona.Nombre } | Edad: { primeraPersona.Edad } | Fecha de Ingreso: { primeraPersona.FechaIngreso }");
+Console.WriteLine($"Nombre: { primeraPersona2.Nombre } | Edad: { primeraPersona2.Edad } | Fecha de Ingreso: { primeraPersona2.FechaIngreso }");
+
+var paises = new List<string>();
+
+// var primerPais = paises.First();
+var primerPais2 = paises.FirstOrDefault();
+
+Console.WriteLine($"Pais: { primerPais2 }");
+
+var mayorDeEdad = personas.First(p => p.Edad >= 18);
+Console.WriteLine($"Nombre: { mayorDeEdad.Nombre } | Edad: { mayorDeEdad.Edad } | Fecha de Ingreso: { mayorDeEdad.FechaIngreso }");
+
+var mayorDeEdad100 = personas.FirstOrDefault(p => p.Edad > 100);
+
+if (mayorDeEdad100 is null) {
+    Console.WriteLine($"No hay persona mayor a 100 años.");
+}
+
+var personaTercerPiso = personas.Where(p => p.Edad >= 30)
+                                .FirstOrDefault();
+
+Console.WriteLine($"Nombre: { personaTercerPiso.Nombre } | Edad: { personaTercerPiso.Edad } | Fecha de Ingreso: { personaTercerPiso.FechaIngreso }");
+
+Console.WriteLine();
