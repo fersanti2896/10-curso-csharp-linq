@@ -84,6 +84,61 @@ if (mayorDeEdad100 is null) {
 var personaTercerPiso = personas.Where(p => p.Edad >= 30)
                                 .FirstOrDefault();
 
-Console.WriteLine($"Nombre: { personaTercerPiso.Nombre } | Edad: { personaTercerPiso.Edad } | Fecha de Ingreso: { personaTercerPiso.FechaIngreso }");
+Console.WriteLine($"Nombre: { personaTercerPiso.Nombre } | Edad: { personaTercerPiso.Edad } | Fecha de Ingreso: { personaTercerPiso.FechaIngreso }\n");
+
+/* Order By */
+foreach (var persona in personas.OrderBy(p => p.Edad)) {
+    Console.WriteLine($"{ persona.Nombre } tiene { persona.Edad } años.");
+}
+
+Console.WriteLine();
+
+foreach (var persona in personas.OrderByDescending(p => p.Edad)) {
+    Console.WriteLine($"{ persona.Nombre } tiene { persona.Edad } años.");
+}
+
+Console.WriteLine();
+
+/* Proyección con Select */
+/* Seleccionando una propiedad */
+var nombres = personas.Select(p => p.Nombre).ToList();
+
+foreach (var persona in nombres) {
+    Console.WriteLine($"{ persona }");
+}
+
+Console.WriteLine();
+
+/* Seleccionando varias propiedades con tipo anonimo */
+var nombresFechaIngreso = personas.Select(p => new { 
+                                        Nombre = p.Nombre,
+                                        FechaIngreso = p.FechaIngreso
+                                   }).ToList();
+
+foreach (var persona in nombresFechaIngreso) {
+    Console.WriteLine($"Nombre: { persona.Nombre } Fecha de Ingreso: { persona.FechaIngreso }");
+}
+
+Console.WriteLine();
+
+/* Seleccionando varias propiedades a una clase */
+var personaDTO = personas.Select(p => new PersonaDTO {
+                            Nombre = p.Nombre,
+                            Edad = p.Edad
+                         }).ToList();
+
+foreach (var persona in personaDTO) {
+    Console.WriteLine($"Nombre: { persona.Nombre } Edad: { persona.Edad } años.");
+}
+
+Console.WriteLine();
+
+/* Tomando el indice */
+var indicePersona = personas.Select((per, ind) => new { Nombre = per.Nombre, Orden = ind + 1 })
+                            .ToList();
+
+foreach (var persona in indicePersona) {
+    Console.WriteLine($"{ persona.Orden }.- { persona.Nombre }.");
+}
 
 Console.WriteLine();
