@@ -43,6 +43,30 @@ var personas = new List<Persona>() {
     new Persona { Nombre = "Wendy Torres", Edad = 24, FechaIngreso = new DateTime(2022, 09, 07), Soltero = true }
 };
 
+/* Funciones escalares */
+Console.WriteLine($"Cantidad total: { personas.Count() } de personas.");
+Console.WriteLine($"Cantidad total: { personas.Count(s => s.Soltero) } de personas solteras.");
+Console.WriteLine($"Suma total de edades: { personas.Sum(s => s.Edad) } años.");
+Console.WriteLine($"Edad mínima: { personas.Min(e => e.Edad) } años.");
+Console.WriteLine($"Edad máxima: { personas.Max(e => e.Edad) } años.");
+Console.WriteLine($"Promedio de edad: { personas.Average(e => e.Edad) } años.");
+Console.WriteLine();
+
+/* Ejemplo con All */
+Console.WriteLine($"¿Son todas las personas mayores de edad? { personas.All(p => p.Edad >= 18) }");
+Console.WriteLine($"¿Son todas las personas solteras? { personas.All(p => p.Soltero) }");
+
+/* Ejemplo con Any */
+Console.WriteLine($"¿Existe alguna persona menor a 18 años? { personas.Any(p => p.Edad <= 18) }");
+Console.WriteLine($"¿Existe alguna persona mayor a 35 años? { personas.Any(p => p.Edad >= 35) }");
+Console.WriteLine($"");
+
+/* Ejemplo con contains */
+var num = Enumerable.Range(1, 20);
+Console.WriteLine($"¿Está el 3 contenido en el arreglo? { num.Contains(3) }");
+Console.WriteLine($"¿Está el 32 contenido en el arreglo? { num.Contains(32) }");
+Console.WriteLine($"");
+
 var porEdad = personas.Where(p => p.Edad <= 25)
                       .ToList();
 
@@ -142,3 +166,60 @@ foreach (var persona in indicePersona) {
 }
 
 Console.WriteLine();
+
+/* Producto Cartesiano con SelectMany */
+var personas2 = new List<Persona>() { 
+    new Persona { Nombre = "Jessica", Telefonos = { "55-2341-3254", "55-2132-5567" } },
+    new Persona { Nombre = "Maria", Telefonos = { "55-6574-3829", "55-9182-7465" } },
+    new Persona { Nombre = "Wendy", Telefonos = { "55-0165-3829", "55-9876-4567" } },
+    new Persona { Nombre = "Fernanda", Telefonos = { "55-2233-7788", "55-2200-8765" } },
+    new Persona { Nombre = "Ingrid", Telefonos = { "55-0174-2934" } }
+};
+
+var telefonos = personas2.SelectMany(t => t.Telefonos).ToList();
+
+foreach (var tel in telefonos) {
+    Console.WriteLine($"Telefonos: { tel }.");
+}
+
+Console.WriteLine();
+
+var infoPersonas = personas2.SelectMany(t => t.Telefonos, (persona, telefono) => new { 
+    Nombre = persona.Nombre,
+    telefono = telefono
+});
+
+foreach (var per in infoPersonas) {
+    Console.WriteLine($"Nombre: { per.Nombre } Telefono: { per.telefono }.");
+}
+
+Console.WriteLine();
+
+/* Take y skip */
+Console.WriteLine($"Primeros 10 números");
+var lista = num.Take(10).ToList();
+
+foreach (var numero in lista) {
+    Console.WriteLine($"Número: { numero }");
+}
+
+Console.WriteLine("\nUltimos 10 números");
+var lista2 = num.TakeLast(10).ToList();
+
+foreach (var numero in lista2) {
+    Console.WriteLine($"Número: { numero }");
+}
+
+Console.WriteLine("\nBloque de 10 numeros pasando los primeros 5 números");
+var lista3 = num.Skip(5).Take(10).ToList();
+
+foreach (var numero in lista3) {
+    Console.WriteLine($"Número: { numero }");
+}
+
+Console.WriteLine("\nBloque de 10 numeros anticipando los ultimos 5 números");
+var lista4 = num.SkipLast(5).TakeLast(10).ToList();
+
+foreach (var numero in lista4) {
+    Console.WriteLine($"Número: { numero }");
+}

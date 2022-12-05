@@ -10,7 +10,7 @@ namespace Linq.Clases {
         public int Edad { get; set; }
         public bool Soltero { get; set; }
         public DateTime FechaIngreso { get; set; }
-        public List<string> Telefonos { get; set; }
+        public List<string> Telefonos { get; set; } = new List<string>();
         public int EmpresaID { get; set; }
     }
 }
