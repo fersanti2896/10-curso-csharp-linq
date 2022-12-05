@@ -173,6 +173,7 @@ var personas2 = new List<Persona>() {
     new Persona { Nombre = "Maria", Telefonos = { "55-6574-3829", "55-9182-7465" } },
     new Persona { Nombre = "Wendy", Telefonos = { "55-0165-3829", "55-9876-4567" } },
     new Persona { Nombre = "Fernanda", Telefonos = { "55-2233-7788", "55-2200-8765" } },
+    new Persona { Nombre = "Ingrid", Telefonos = { "55-0174-2934" } },
     new Persona { Nombre = "Ingrid", Telefonos = { "55-0174-2934" } }
 };
 
@@ -222,4 +223,43 @@ var lista4 = num.SkipLast(5).TakeLast(10).ToList();
 
 foreach (var numero in lista4) {
     Console.WriteLine($"Número: { numero }");
+}
+
+/* Agrupando con GroupBy */
+Console.WriteLine();
+var agrupamiento = personas.GroupBy(p => p.Soltero);
+
+foreach (var grupo in agrupamiento) {
+    Console.WriteLine($"Grupo de Solteros: { grupo.Key } Total de Solteros: { grupo.Count() }");
+    foreach (var persona in grupo) {
+        Console.WriteLine($"Nombre: { persona.Nombre }");
+    }
+}
+
+Console.WriteLine();
+
+/* Eliminando repetidos con Distinct y DistinctBy */
+int[] num2 = { 1, 2, 2, 4, 2, 5, 3, 2, 1 };
+var repNum = num2.Distinct();
+
+foreach (var i in repNum) {
+    Console.WriteLine($"Numero: { i }");
+}
+Console.WriteLine();
+
+var repPersonas = personas2.DistinctBy(p => p.Nombre).ToList();
+
+foreach (var persona in repPersonas) {
+    Console.WriteLine($"Nombre: { persona.Nombre }");
+}
+
+Console.WriteLine();
+
+var secciones = num2.Chunk(3);
+
+foreach (var arreglo in secciones) {
+    Console.WriteLine($"Arreglo: { arreglo }");
+    foreach (var item in arreglo) {
+        Console.WriteLine($"{item}");
+    }
 }
